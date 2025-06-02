@@ -1,0 +1,40 @@
+Create database univer;
+
+CREATE TABLE "person_info"(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "first_name" VARCHAR(255) NOT NULL,
+    "last_name" VARCHAR(255) NOT NULL,
+    "birthday" DATE NOT NULL
+);
+
+CREATE TABLE "student"(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "person_info_id" int REFERENCES "person_info"("id") UNIQUE,
+    "group" VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE "teacher"(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "person_info_id" int REFERENCES "person_info"(id));
+
+CREATE TABLE "discipline"(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "title" VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE "discipline_teacher"(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "teacher_id" int REFERENCES "teacher"(id),
+    "discipline_id" int REFERENCES "discipline"(id)
+);
+
+
+
+CREATE TABLE "discipline_student"(
+    "id" SERIAL PRIMARY KEY NOT NULL,
+    "student_id" int REFERENCES "student"(id),
+    "discipline_id" int REFERENCES "discipline"(id),
+  "point" int CONSTRAINT point CHECK(point > 0 AND point <= 100)
+);
+
+

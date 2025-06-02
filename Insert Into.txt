@@ -1,0 +1,33 @@
+-- средний балл по математике
+SELECT AVG(point) FROM discipline_student WHERE discipline_id = 1;
+
+SELECT AVG(ds.point) FROM discipline_student AS ds 
+			INNER JOIN discipline AS d ON d.id = ds.discipline_id 
+      WHERE d.title = 'Maths';
+
+-- средний балл в разрезе дисциплин
+
+SELECT ds.discipline_id, d.title, AVG(ds.point) 
+FROM discipline_student AS ds
+INNER JOIN discipline AS d ON d.id = ds.discipline_id
+GROUP BY  ds.discipline_id, d.title
+ORDER BY ds.discipline_id;
+
+-- средний балл успеваемости по каждому студенту
+
+SELECT pi.last_name, pi.first_name, AVG(ds.point) 
+FROM discipline_student AS ds
+INNER JOIN student AS s ON s.id = ds.student_id
+INNER JOIN person_info AS pi ON pi.id = s.person_info_id
+GROUP BY  pi.last_name, pi.first_name
+ORDER BY pi.last_name;
+
+
+-- выбрать трех студентов с максимальным баллом по каждому предмету
+SELECT pi.last_name, pi.first_name,  MAX(point)
+FROM discipline_student AS ds
+INNER JOIN student AS s ON s.id = ds.student_id
+INNER JOIN person_info AS pi ON pi.id = s.person_info_id
+GROUP BY pi.last_name, pi.first_name
+ORDER BY MAX(point) desc
+LIMIT 3;
