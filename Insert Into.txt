@@ -1,33 +1,84 @@
--- средний балл по математике
-SELECT AVG(point) FROM discipline_student WHERE discipline_id = 1;
-
-SELECT AVG(ds.point) FROM discipline_student AS ds 
-			INNER JOIN discipline AS d ON d.id = ds.discipline_id 
-      WHERE d.title = 'Maths';
-
--- средний балл в разрезе дисциплин
-
-SELECT ds.discipline_id, d.title, AVG(ds.point) 
-FROM discipline_student AS ds
-INNER JOIN discipline AS d ON d.id = ds.discipline_id
-GROUP BY  ds.discipline_id, d.title
-ORDER BY ds.discipline_id;
-
--- средний балл успеваемости по каждому студенту
-
-SELECT pi.last_name, pi.first_name, AVG(ds.point) 
-FROM discipline_student AS ds
-INNER JOIN student AS s ON s.id = ds.student_id
-INNER JOIN person_info AS pi ON pi.id = s.person_info_id
-GROUP BY  pi.last_name, pi.first_name
-ORDER BY pi.last_name;
+INSERT INTO discipline (
+ title
+) VALUES 
+('Maths'),
+('Physics'),
+('Java'),
+('PE');
 
 
--- выбрать трех студентов с максимальным баллом по каждому предмету
-SELECT pi.last_name, pi.first_name,  MAX(point)
-FROM discipline_student AS ds
-INNER JOIN student AS s ON s.id = ds.student_id
-INNER JOIN person_info AS pi ON pi.id = s.person_info_id
-GROUP BY pi.last_name, pi.first_name
-ORDER BY MAX(point) desc
-LIMIT 3;
+INSERT INTO person_info(first_name, last_name, birthday)
+VALUES
+('Alex', 'Shmidt', '1999-04-25'),
+('Albert', 'Einstein', '1856-01-16'),
+('Maria', 'Curie', '1888-12-31'),
+('Anna', 'Yely', '2000-07-15'),
+('Victor', 'Hugo', '2002-06-02'),
+('Victoria', 'Best', '2001-05-31'),
+('Jonny', 'Depp', '2009-06-09'),
+('Sam', 'Johanson', '2009-02-22');
+
+INSERT INTO student (person_info_id, "group")
+VALUES
+(8, 'MAT-21'),
+(4, 'MAT-21'),
+(5, 'MAT-21'),
+(3, 'JV-51'),
+(6, 'JV-51'),
+(7, 'JV-51');
+
+INSERT INTO discipline_student (discipline_id, student_id, point)
+VALUES
+(1, 3, 50),
+(2, 3, 20),
+(3, 3, 90),
+(4, 3, 5),
+(1, 4, 100),
+(2, 4, 20),
+(3, 4, 35),
+(4, 4, 77),
+(1, 5, 15),
+(2, 5, 88),
+(3, 5, 66),
+(4, 5, 22),
+(1, 6, 33),
+(2, 6, 85);
+
+
+
+
+
+
+
+
+(8, 'MAT-21'),
+(4, 'MAT-21'),
+(5, 'MAT-21'),
+(3, 'JV-51'),
+(6, 'JV-51'),
+(7, 'JV-51');
+
+INSERT INTO teacher (person_info_id)
+VALUES
+(1),
+(2);
+
+
+
+INSERT INTO discipline_teacher (teacher_id, discipline_id)
+ VALUES 
+(1,2),
+(1,1),
+(1,3),
+(1,4),
+
+(2,1),
+(2,2),
+(2,3),
+(2,4);
+
+
+
+
+
+
